@@ -6,6 +6,7 @@
       
       <li><a href="#about" target="_self">about</a></li>
       <li><a href="#contact" target="_self">contact</a></li>
+      <li><a href="/products" target="_self">products</a></li>
       <% if(typeof(user) == "undefined"){ %>
         <li>
           <form action="/login">
@@ -18,16 +19,8 @@
           </form> 
         </li>
      <% }else{%>
-          <li>
-            <form action="/login">
-              <button type="submit" class="btn btn-empty m-2">aaaa</button>
-            </form>
-          </li>
-          <li>
-            <form action="/logout">
-              <button type="submit" class="btn btn-empty m-2">Log Out</button>
-            </form> 
-          </li>
+      <li><a href="/products" target="_self">shopping carts</a></li>
+      <li><a href="/logout" target="_self">Log Out</a></li>
         <% }%>
         
     </ul>

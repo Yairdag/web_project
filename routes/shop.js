@@ -14,7 +14,7 @@ products = [{
 }];
 
 router.get("/products", (req, res) => {
-    res.render("products", {products:products} );
+    res.render("products", {products:products , user:req.user} );
 });
 
 

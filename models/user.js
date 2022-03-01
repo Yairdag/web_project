@@ -9,7 +9,10 @@ const UserSchema = new Schema({
   firstName: String,
   lastName: String,
   password: String,
-  // cart: String
+  cart: {
+    type : Schema.Types.ObjectId,
+    ref: "Cart",
+  }
 },
 {
   strict: false

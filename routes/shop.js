@@ -1,3 +1,4 @@
+const { redirect } = require('express/lib/response');
 
 const router = require('express').Router();
 
@@ -22,7 +23,13 @@ router.get("/shopping_cart", (req, res) => {
     res.render("products", {products:products} );
 });
 
+router.get("/order-info", (req, res) => {
+    res.render("order-info");
+});
 
-
+router.post("/order-info", (req, res) => {
+    console.log("order registered");
+    redirect("/");
+});
 
 module.exports = router;

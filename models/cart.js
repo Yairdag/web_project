@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 
 const CartSchema = new Schema({
   total_price: String,
-  items: {item:String, amount:Number}
+  items: [{item:{
+                  type : Schema.Types.ObjectId,
+                  ref: "Product"} , amount:Number}]
 },
 {
   strict: true

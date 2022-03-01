@@ -18,8 +18,16 @@ router.get("/products", (req, res) => {
 });
 
 
+
+// total_price: String,
+// items: [{item:String, amount:Number}]
+
+shopping_c = [{
+    total_price: "500",
+    items:  [{iphone12: 1} , {air_pos_pro :2}] }];
+
 router.get("/shopping_cart", (req, res) => {
-    res.render("products", {products:products} );
+    res.render("shopping_cart", {shopping_c:shopping_c , user:req.user} );
 });
 
 

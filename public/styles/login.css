@@ -1,0 +1,21 @@
+.login-form {
+    padding: 3rem;
+    max-width: 30rem;
+    margin: auto;
+}
+
+.form-field {
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-form button[type="submit"] {
+    margin: auto;
+    display: block;
+}
+
+.google-auth {
+    color: var(--google-red);
+    text-align: center;
+}

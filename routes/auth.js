@@ -28,8 +28,7 @@ router.post("/register", function (req, res) {
 router.post("/login",
   passport.authenticate("local", { failureRedirect: "/login" }),
   function (req, res) {
-    req.session.isLogged = true;
-    res.redirect("/code");
+    res.redirect("/");
   }
 );
 

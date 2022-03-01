@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const findOrCreate = require('mongoose-findorcreate');
 
+
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
@@ -8,6 +9,7 @@ const UserSchema = new Schema({
   firstName: String,
   lastName: String,
   password: String,
+  // cart: String
 },
 {
   strict: false

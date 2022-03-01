@@ -7,7 +7,8 @@ const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require("connect-mongo");
 const authRoutes = require("./routes/auth");
-const codeRoutes = require("./routes/code");
+const shopRoutes = require("./routes/shop");
+
 const { profile } = require('console');
 
 const app = express();
@@ -54,8 +55,8 @@ app.use(passport.session());
 
 mongoose.connect(
   process.env.MONGO_URL,
-  { useNewUrlParser: true, useUnifiedTopology: true }
-);
+  { useNewUrlParser: true, useUnifiedTopology: true } );
+
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
@@ -68,20 +69,14 @@ db.once("open", () => {
  */
 
 app.get("/", (req, res) => {
-  res.render("home");
+  console.log(req.user)
+  res.render("home", {user: req.user});
 });
 
-app.get("/exams", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.render("exams/index");
-  } else {
-    res.redirect("/login");
-  }
-});
+
 
 app.use(authRoutes);
-app.use(codeRoutes);
-
+app.use(shopRoutes);
 
 app.listen(3000, () => {
   console.log("Listening to port 3000..");

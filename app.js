@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo");
 const authRoutes = require("./routes/auth");
 const shopRoutes = require("./routes/shop");
 
+
 const { profile } = require('console');
 
 const app = express();
@@ -69,11 +70,8 @@ db.once("open", () => {
  */
 
 app.get("/", (req, res) => {
-  console.log(req.user)
   res.render("home", {user: req.user});
 });
-
-
 
 app.use(authRoutes);
 app.use(shopRoutes);

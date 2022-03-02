@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <!-- Page Meta Data -------------------------------------------------------------------------->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0"
+    />
+    <title>Tech-Store - Login</title>
+
+    <!-- Styles ---------------------------------------------------------------------------------->
+    <!-- font-awesome (icons library) -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- modern-normalize CSS (reset file) -->
+    <link href="styles/modern-normalize.css" rel="stylesheet" type="text/css" />
+    <!-- custom styles -->
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+    <link href="styles/login.css" rel="stylesheet" type="text/css" />
+
+    <!-- Scripts --------------------------------------------------------------------------------->
+    <!-- ScrollReveal v4.0.9 (scroll animations library) -->
+    <script src="scripts/scrollreveal.js" defer></script>
+  </head>
+
+  <body>
+    <% layout('./layouts/boilerplate') %>
+    <main class="main container">
+      <section>
+        <div class="section-title-wm">
+          <h2>TS</h2>
+        </div>
+        <div class="section-title">
+          <h3>Order Details<span>.</span></h3>
+        </div>
+
+        <form class="login-form" action="/login" method="POST">
+          <div class="form-field">
+            <label for="name">Name</label>
+            <input class="form-input" type="email" name="username" />
+          </div>
+          <div class="form-field">
+            <label for="address">Address</label>
+            <input class="form-input" type="text" name="password" />
+          </div>
+          <div class="form-field">
+            <label for="address">Phone Number</label>
+            <input class="form-input" type="text" name="password" />
+          </div>
+          <button class="btn btn-primary" type="submit">Send</button>
+        </form>
+
+      </section>
+    </main>
+  </body>
+</html>

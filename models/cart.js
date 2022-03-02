@@ -1,18 +1,17 @@
 const mongoose = require("mongoose");
-const findOrCreate = require('mongoose-findorcreate');
-
 const Schema = mongoose.Schema;
 
 const CartSchema = new Schema({
-  total_price: String,
-  items: [{item:{
-                  type : Schema.Types.ObjectId,
-                  ref: "Product"} , amount:Number}]
-},
-{
-  strict: true
+  items: [
+    {
+      productId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+        required: true
+      },
+      quantity: { type: Number, required: true }
+    }
+  ]
 });
-
-UserSchema.plugin(findOrCreate);
 
 module.exports = mongoose.model("Cart", CartSchema);

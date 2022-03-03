@@ -1,4 +1,7 @@
 const Product = require("../models/product");
+const Order = require("../models/order");
+const User = require("../models/user");
+
 const router = require('express').Router();
 
 products = [{
@@ -33,8 +36,8 @@ shopping_c = [{
     items: [{ iphone12: 1 }, { air_pos_pro: 2 }]
 }];
 
-router.get("/shopping_cart", (req, res) => {
-    res.render("shopping_cart", { shopping_c: shopping_c, user: req.user });
+router.get("/shopping-cart", (req, res) => {
+    res.render("shopping-cart", { cartProducts: req.user.cart.items, user: req.user });
 });
 
 router.post("/add-product", function (req, res) {
@@ -68,6 +71,35 @@ router.post("/cart", (req, res) => {
             console.log(result);
             res.redirect('/cart');
         });
+});
+
+router.post("/order", (req, res) => {
+    User.findById(req.user.id)
+    .populate('cart.items.productId')
+    .then(user => {
+      const products = user.cart.items.map(i => {
+        return { quantity: i.quantity, product: { ...i.productId.toJSON() } };
+      });
+      const order = new Order({
+        products: products,
+        userId: req.user
+      });
+      return order.save();
+    })
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(err => console.log(err));
+});
+
+router.get("/orders", (req, res) => {
+    Order.find({ userId: req.user.id })
+    .then(orders => {
+      res.render('shop/orders', {
+        orders: orders,
+      });
+    })
+    .catch(err => console.log(err));
 });
 
 

@@ -4,18 +4,6 @@ const User = require("../models/user");
 
 const router = require('express').Router();
 
-products = [{
-    name: "laptop",
-    price: 400,
-    imgUrl: "a",
-    id: 1
-}, {
-    name: "phone",
-    price: 200,
-    imgUrl: "a",
-    id: 2
-}];
-
 router.get("/products", (req, res) => {
     Product.find()
     .then(products => {
@@ -27,17 +15,27 @@ router.get("/products", (req, res) => {
 });
 
 
-
-// total_price: String,
-// items: [{item:String, amount:Number}]
-
-shopping_c = [{
-    total_price: "500",
-    items: [{ iphone12: 1 }, { air_pos_pro: 2 }]
-}];
-
 router.get("/shopping-cart", (req, res) => {
-    res.render("shopping-cart", { cartProducts: req.user.cart.items, user: req.user });
+  User.findById(req.user.id)
+  .populate('cart.items.productId')
+  .then(user => {
+    const products = user.cart.items.map(i => {
+      return { quantity: i.quantity, product: { ...i.productId.toJSON() } };
+    });
+
+    let sum = 0
+    for (p of products) {
+      sum += (p.quantity * p.product.price)
+    }
+    res.render("shopping-cart", { cartProducts: products, user: req.user , totalPrice: sum});
+  }); 
+});
+
+// doesnt work 
+router.post("/shopping-cart", (req, res) => {
+  User.findById(req.body.userId)
+  .then( use => { Product.findOneAndRemove( {'use.cart.items.productId' : req.body.productId } )
+  }); 
 });
 
 router.post("/add-product", function (req, res) {

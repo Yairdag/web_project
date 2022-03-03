@@ -1,14 +1,15 @@
+
 <% layout('./layouts/boilerplate') %>
+
 
 <html lang="en">
 
-<link href="styles/shopping_cart.css" rel="stylesheet" type="text/css" />
-
+<link href="styles/shopping-cart.css" rel="stylesheet" type="text/css" />
 
 <body>
   <main>
     <div class="basket">
-
+      <div class="basket-module"> </div>
       <div class="basket-labels">
         <ul>
           <li class="item item-heading">Item</li>
@@ -18,15 +19,45 @@
         </ul>
       </div>
 
+      <% if (cartProducts.length > 0) { %>
+        <% for (let i =0; i < cartProducts.length; i++) { %>
+          <div class="basket-product">
+            
+              <div class="item">
+                <div class="product-image">
+                  <img src="<%= cartProducts[i].product.url %>" alt="Placholder Image" class="product-frame">
+                </div>
+              </div>
+
+              <div class="price"><%= cartProducts[i].product.price%></div>
+
+              <div class="quantity"><%= cartProducts[i].quantity %></div>
+
+              <div class="subtotal"><%= cartProducts[i].product.price * cartProducts[i].quantity %></div>
+
+              <form action="/shopping-cart" method="post">
+                <div class="remove">
+                  <button type="submit">Remove</button>
+                </div>
+                  <input type="hidden" name="userId" value="<%=user._id %>">
+                  <input type="hidden" name="productId" value="<%=cartProducts[i].product._id%>">
+              </form>
 
 
+            </div>
+          
 
+        <% } %>
+      <% } else { %>
+          <h1>No Products Found!</h1>
+      <% } %>
+    </div>
     <aside>
       <div class="summary">
         <div class="summary-total-items"><span class="total-items"></span> Items in your Bag</div>
         <div class="summary-subtotal">
           <div class="subtotal-title">Subtotal</div>
-          <div class="subtotal-value final-value" id="basket-subtotal">130.00</div>
+          <div class="subtotal-value final-value" id="basket-subtotal"><%= totalPrice %></div>
           <div class="summary-promo hide">
             <div class="promo-title">Promotion</div>
             <div class="promo-value final-value" id="basket-promo"></div>
@@ -43,18 +74,19 @@
         </div>
         <div class="summary-total">
           <div class="total-title">Total</div>
-          <div class="total-value final-value" id="basket-total">130.00</div>
+          <div class="total-value final-value" id="basket-total"><%= totalPrice %></div>
         </div>
         <div class="summary-checkout">
-          <form action="/order" method="post">
-            <button class="btn" type="submit">confirm</button>
-            <input type="hidden" name="productId"">
-        </form>
+          <button class="checkout-cta">Go to Secure Checkout</button>
         </div>
       </div>
     </aside>
+
+    
   </main>
 </body>
 
 </html>
+
+
 

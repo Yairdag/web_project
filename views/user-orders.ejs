@@ -1,0 +1,18 @@
+<% layout('./layouts/boilerplate') %>
+
+
+    <link rel="stylesheet" href="/css/orders.css">
+    <main>
+        <% if (orders.length <=0) { %>
+            <h1>No Orders Found</h1>
+            <% } else { %>
+                <% orders.forEach(order=> { %>
+                        <h1>Order ID: <%= order._id %></h1>
+                            <% order.products.forEach(p=> { %>
+                                <p>
+                                    <%= p.product.name %> (<%= p.quantity %>)
+                                </p>
+                                <% }); %>
+                    <% }); %>
+                        <% } %>
+    </main>

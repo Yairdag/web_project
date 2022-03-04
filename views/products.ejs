@@ -1,32 +1,46 @@
 <% layout('./layouts/boilerplate') %>
 
-<link href="styles/product.css" rel="stylesheet" type="text/css" />
+    <link href="styles/product.css" rel="stylesheet" type="text/css" />
 
 
-<% if (products.length > 0) { %>
-    <div class="grid">
-        <% for (let product of products) { %>
-            <article class="card product-item">
-                <header class="card__header">
-                    <h1 class="product__title"><%= product.name %></h1>
-                </header>
-                <div class="card__image">
-                    <img src=" <%=product.url %>" alt="">
-                </div>
-                <div class="card__content">
-                    <h2 class="product__price"> <%product.price%></h2>
-                    <p class="product__description">A very interesting book about so many even more interesting things!</p>
-                </div>
-                <div class="card__actions">
-                    <form action="/cart" method="post">
-                        <button class="btn" type="submit">Add to Cart</button>
-                        <input type="hidden" name="productId" value="<%=product._id %>">
-                    </form>
-                </div>
-            </article>
-        <% } %>
-    </div>
-<% } else { %>
-    <h1>No Products Found!</h1>
-<% } %>
- 
+    <% if (products.length> 0) { %>
+        <div class="grid">
+            <% for (let product of products) { %>
+                <article class="card product-item">
+                    <header class="card__header">
+                        <h1 class="product__title">
+                            <%= product.name %>
+                        </h1>
+                    </header>
+                    <div class="card__image">
+                        <img src=" <%=product.url %>" alt="">
+                    </div>
+                    <div class="card__content">
+                        <h2 class="product__price">
+                            <%product.price%>
+                        </h2>
+                        <p class="product__description">A very interesting book about so many even more interesting
+                            things!</p>
+                    </div>
+                    <div class="card__actions">
+                        <form action="/cart" method="post">
+                            <button class="btn" type="submit">Add to Cart</button>
+                            <input type="hidden" name="productId" value="<%=product._id %>">
+                        </form>
+                    </div>
+                    <div class="card__actions">
+                        <form action="/edit-product/<%= product._id %>" method="GET">
+                            <input type="hidden" value="<%= product._id %>" name="productId">
+                            <button class="btn" type="submit">Edit</button>
+                        </form>
+                        <form action="/delete-product" method="POST">
+                            <input type="hidden" value="<%= product._id %>" name="productId">
+                            <button class="btn" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </article>
+                <% } %>
+        </div>
+        <% } else { %>
+            <h1>No Products Found!</h1>
+            <% } %>

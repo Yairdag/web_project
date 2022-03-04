@@ -22,6 +22,16 @@ const userSchema = new Schema({
   }
 });
 
+userSchema.methods.removeFromCart = function(prodId) {
+  const updatedCartItems = this.cart.items.filter(product => {
+    return product.productId.toString() != prodId.toString();
+  });
+  const updatedCart = {
+    items: updatedCartItems
+  };
+  this.cart = updatedCart;
+  return this.save();
+}
 
 userSchema.methods.addToCart = function (product) {
   const cartProductIndex = this.cart.items.findIndex(cp => {

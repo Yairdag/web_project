@@ -39,6 +39,7 @@
                 <div class="remove">
                   <button type="submit">Remove</button>
                 </div>
+                  <%console.log(cartProducts[i].product._id) %>
                   <input type="hidden" name="userId" value="<%=user._id %>">
                   <input type="hidden" name="productId" value="<%=cartProducts[i].product._id%>">
               </form>

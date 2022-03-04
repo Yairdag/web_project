@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const Order = require("../models/order");
 const User = require("../models/user");
+const user = require("../models/user");
 
 const router = require('express').Router();
 
@@ -31,11 +32,11 @@ router.get("/shopping-cart", (req, res) => {
   }); 
 });
 
-// doesnt work 
 router.post("/shopping-cart", (req, res) => {
-  User.findById(req.body.userId)
-  .then( use => { Product.findOneAndRemove( {'use.cart.items.productId' : req.body.productId } )
-  }); 
+  const prodId = req.body.productId;
+  req.user.removeFromCart(prodId).then(user=>{
+    res.redirect("/");
+  });
 });
 
 router.post("/add-product", function (req, res) {

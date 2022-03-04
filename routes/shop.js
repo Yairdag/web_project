@@ -1,9 +1,9 @@
 const Product = require("../models/product");
 const Order = require("../models/order");
 const User = require("../models/user");
+const user = require("../models/user");
 
 const router = require('express').Router();
-
 
 router.get("/products", (req, res) => {
     Product.find()
@@ -17,7 +17,26 @@ router.get("/products", (req, res) => {
 
 
 router.get("/shopping-cart", (req, res) => {
-    res.render("shopping-cart", { cartProducts: req.user.cart.items, user: req.user });
+  User.findById(req.user.id)
+  .populate('cart.items.productId')
+  .then(user => {
+    const products = user.cart.items.map(i => {
+      return { quantity: i.quantity, product: { ...i.productId.toJSON() } };
+    });
+
+    let sum = 0
+    for (p of products) {
+      sum += (p.quantity * p.product.price)
+    }
+    res.render("shopping-cart", { cartProducts: products, user: req.user , totalPrice: sum});
+  }); 
+});
+
+router.post("/shopping-cart", (req, res) => {
+  const prodId = req.body.productId;
+  req.user.removeFromCart(prodId).then(user=>{
+    res.redirect("/");
+  });
 });
 
 router.post("/add-product", function (req, res) {

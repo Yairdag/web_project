@@ -80,7 +80,7 @@ button,
 .subtotal-value:before,
 .total-value:before,
 .promo-value:before {
-  content: '£';
+  content: '$';
 }
 
 .hide {
@@ -91,7 +91,6 @@ main {
   clear: both;
   font-size: 0.75rem;
   margin: 0 auto;
-  overflow: hidden;
   padding: 1rem 0;
   width: 960px;
 }
@@ -361,8 +360,9 @@ aside {
     text-align: center;
     width: 34%;
   }
+  
   .quantity-field {
-    float: none;
+    float: right;
   }
   .remove {
     bottom: 0;

@@ -1,77 +1,57 @@
-<!DOCTYPE html>
+<% layout('./layouts/boilerplate') %>
 
-<html lang="en">
-  <head>
-    <!-- Page Meta Data -------------------------------------------------------------------------->
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0"
-    />
-    <title>Tech-Store - Register</title>
+<link href="styles/register.css" rel="stylesheet" type="text/css" />
 
-    <!-- Styles ---------------------------------------------------------------------------------->
-    <!-- font-awesome (icons library) -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
-    <!-- modern-normalize CSS (reset file) -->
-    <link href="styles/modern-normalize.css" rel="stylesheet" type="text/css" />
-    <!-- custom styles -->
-    <link href="styles/main.css" rel="stylesheet" type="text/css" />
-    <link href="styles/login.css" rel="stylesheet" type="text/css" />
-
-    <!-- Scripts --------------------------------------------------------------------------------->
-    <!-- ScrollReveal v4.0.9 (scroll animations library) -->
-    <script src="scripts/scrollreveal.js" defer></script>
-  </head>
-
-  <body>
-    <% layout('./layouts/boilerplate') %>
-    <main class="main container">
-      <section>
-        <div class="section-title-wm">
-          <h2>Register</h2>
-        </div>
+<main class="main container">
+    <section>
         <div class="section-title">
-          <h3>Register<span>.</span></h3>
+            <h2>Register<span>.</span></h2>
         </div>
 
-        <form class="login-form" action="/register" method="POST">
-          <div class="form-field">
-            <label for="email">Email</label>
-            <input class="form-input" type="email" name="username" />
-          </div>
-          <div class="form-field">
-            <label for="firstName">First Name</label>
-            <input class="form-input" type="text" name="firstName" />
-          </div>
-          <div class="form-field">
-            <label for="lastName">Last Name</label>
-            <input class="form-input" type="text" name="lastName" />
-          </div>
-          <div class="form-field">
-            <label for="password">Password</label>
-            <input class="form-input" type="password" name="password" />
-          </div>
-          <button class="btn btn-primary" type="submit">Register</button>
-          <p>
-            Already Have An Account?
-            <a href="/login" role="button" class="btn">Sign In</a>
-          </p>
-        </form>
+        <p>
+            Create a new user account.
+        </p>
 
-        <div class="google-auth">
-          <a href="/auth/google" role="button">
-            <i class="fa fa-google"></i> Sign In with Google
-          </a>
+        <br>
+        <br>
+
+        <div class="register-wrapper">
+            <form class="form" action="/register" method="POST">
+                <div class="form-field">
+                    <label for="username">Email</label>
+                    <input class="form-input" id="username" name="username" type="email" placeholder="Enter your email"required="required" />
+                </div>
+                <div class="form-field">
+                    <label for="firstName">First Name</label>
+                    <input class="form-input" id="firstName" name="firstName" type="text" placeholder="Enter your first name" required="required" />
+                </div>
+                <div class="form-field">
+                    <label for="lastName">Last Name</label>
+                    <input class="form-input" id="lastName" name="lastName" type="text" placeholder="Enter your last name" required="required"/>
+                </div>
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input class="form-input" id="password" name="password" type="text" placeholder="Enter a new password" required="required"/>
+                </div>
+                <div class="form-submit">
+                    <button class="btn btn-block btn-primary" type="submit">Create account</button>
+                </div>
+            </form>
+
+            <div class="log-options">
+                <div class="social-auth">
+                    <p>Don't want to create a new user?</p>
+                    <a href="/auth/google" role="button" class="btn btn-block google-auth"><i class="fa fa-google"></i> Continue with Google</a>
+                    <a href="/auth/facebook" role="button" class="btn btn-block facebook-auth"><i class="fa fa-facebook"></i> Continue with Facebook</a>
+                </div>
+                <div>
+                    <p>Already have an account?</p>
+                    <a href="/login" role="button" class="btn btn-block btn-link">Log In Now</a>
+                </div>
+            </div>
         </div>
-      </section>
-    </main>
 
-  </body>
-</html>
+    </section>
+</main>
+
+<% layout('./layouts/boilerplate') %>

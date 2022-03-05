@@ -4,15 +4,31 @@
     <link rel="stylesheet" href="/css/orders.css">
     <main>
         <% if (orders.length <=0) { %>
-            <h1>No Orders Found</h1>
-            <% } else { %>
-                <% orders.forEach(order=> { %>
-                        <h1>Order - # <%= order._id %></h1>
-                            <% order.products.forEach(p=> { %>
-                                <p>
-                                    <%= p.product.name %> (<%= p.quantity %>)
-                                </p>
+            <div>
+                <h1>No Orders Found</h1>
+                <% } else { %>
+                    <% orders.forEach(order=> { %>
+                        <h1>Order ID: <%= order._id %>
+                        </h1>
+                        <h3>customer's name: <%= order.userId.firstName %> <%= order.userId.lastName %></h3>
+                        <h3>customer's email: <%= order.userId.email %></h3>
+                        <h4>Products:</h3>
+
+                        <% order.products.forEach(p=> { %>
+                            <p>
+                                <%= p.product.name %> (<%= p.quantity %>)
+                            </p>
+                            <% }); %>
+                                <form action="/edit-order/<%= order._id %>" method="GET">
+                                    <input type="hidden" value="<%= order._id %>" name="orderId">
+                                    <button class="btn" type="submit">Edit</button>
+                                </form>
+                                <form action="/delete-order" method="POST">
+                                    <input type="hidden" value="<%= order._id %>" name="orderId">
+                                    <button class="btn" type="submit">Delete</button>
+                                </form>
                                 <% }); %>
-                    <% }); %>
-                        <% } %>
+                                    <% } %>
+
+            </div>
     </main>

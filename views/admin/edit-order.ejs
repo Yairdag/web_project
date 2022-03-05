@@ -1,0 +1,36 @@
+<form action="/update-order" method="POST">
+    <div>
+
+        <% for (let i=0; i < order.products.length; i++) { %>
+            <div>
+                <h3>
+                    Item: <%= order.products[i].product.name%>
+                </h3>
+                <div class="form-control">
+                    <label for="quantity">Quantity</label>
+                    <input type="text" name="quantity" id="quantity" value="<%= order.products[i].quantity %>">
+                </div>
+                <input type="hidden" value="<%= order.products[i].product._id %>" name="prodId">
+                <form action="/delete-order-item" method="post">
+                    <div class="remove">
+                        <button type="submit">Remove Item</button>
+                    </div>
+                    <input type="hidden" name="orderIdRemove" value="<%=order.products[i].product._id%>">
+                </form>
+            </div>
+
+            <% } %>
+                <h3>
+                    Delivery
+                </h3>
+                <div class="summary-delivery">
+                    <select name="delivery" class="summary-delivery-selection">
+                        <option value="collection" selected="selected">Collection</option>
+                        <option value="first-class">Royal Mail 1st Class</option>
+                        <option value="second-class">Royal Mail 2nd Class</option>
+                        <option value="signed-for">Royal Mail Special Delivery</option>
+                    </select>
+                </div>
+                <button class="btn" type="submit">Update Order</button>
+    </div>
+</form>

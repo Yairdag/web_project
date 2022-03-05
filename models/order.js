@@ -13,8 +13,9 @@ const orderSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
         ref: 'User'
-    }
-
+    },
+    total: Number,
+    delivery: String
 });
 
 module.exports = mongoose.model('Order', orderSchema);

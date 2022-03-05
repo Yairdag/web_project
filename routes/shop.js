@@ -15,28 +15,28 @@ router.get("/products", (req, res) => {
         });
 });
 
-
 router.get("/shopping-cart", (req, res) => {
-  User.findById(req.user.id)
-  .populate('cart.items.productId')
-  .then(user => {
-    const products = user.cart.items.map(i => {
-      return { quantity: i.quantity, product: { ...i.productId.toJSON() } };
-    });
+    User.findById(req.user.id)
+        .populate('cart.items.productId')
+        .then(user => {
+            const products = user.cart.items.map(i => {
+                return { quantity: i.quantity, product: { ...i.productId.toJSON() } };
+            });
 
-    let sum = 0
-    for (p of products) {
-      sum += (p.quantity * p.product.price)
-    }
-    res.render("shopping-cart", { cartProducts: products, user: req.user , totalPrice: sum});
-  }); 
+            let sum = 0
+            for (p of products) {
+                sum += (p.quantity * p.product.price)
+            }
+            res.render("shopping-cart", { cartProducts: products, user: req.user, totalPrice: sum });
+        });
 });
 
-router.post("/shopping-cart", (req, res) => {
-  const prodId = req.body.productId;
-  req.user.removeFromCart(prodId).then(user=>{
-    res.redirect("/");
-  });
+router.post("/delete-cart-item", (req, res) => {
+    const prodId = req.body.productId;
+    console.log(prodId);
+    req.user.removeFromCart(prodId).then(user => {
+        res.redirect("/shopping-cart");
+    });
 });
 
 router.post("/add-product", function (req, res) {
@@ -59,9 +59,7 @@ router.get("/add-product", function (req, res) {
 });
 
 router.get('/edit-product/:productId', function (req, res) {
-    console.log("hi");
     const prodId = req.params.productId;
-    console.log(prodId);
     Product.findById(prodId)
         .then(product => {
             if (!product) {
@@ -79,42 +77,39 @@ router.post('/edit-product', function (req, res) {
     const updatedTitle = req.body.name;
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
-  
+
     Product.findById(prodId)
-      .then(product => {
-        product.name = updatedTitle;
-        product.price = updatedPrice;
-        product.imageUrl = updatedImageUrl;
-        return product.save();
-      })
-      .then(result => {
-        console.log(result);
-        res.redirect('/products');
-      })
-      .catch(err => console.log(err));
+        .then(product => {
+            product.name = updatedTitle;
+            product.price = updatedPrice;
+            product.imageUrl = updatedImageUrl;
+            return product.save();
+        })
+        .then(result => {
+            console.log(result);
+            res.redirect('/products');
+        })
+        .catch(err => console.log(err));
 });
 
 router.post('/delete-product', function (req, res) {
     const prodId = req.body.productId;
     Product.findByIdAndRemove(prodId)
-      .then(() => {
-        console.log('DESTROYED PRODUCT');
-        res.redirect('/products');
-      })
-      .catch(err => console.log(err));
+        .then(() => {
+            res.redirect('/products');
+        })
+        .catch(err => console.log(err));
 });
 
 
 router.post("/cart", (req, res) => {
     const prodId = req.body.productId;
-    console.log(prodId);
     res.redirect("/");
     Product.findById(prodId)
         .then(product => {
             return req.user.addToCart(product);
         })
         .then(result => {
-            console.log(result);
             res.redirect('/cart');
         });
 });
@@ -128,11 +123,15 @@ router.post("/order", (req, res) => {
             });
             const order = new Order({
                 products: products,
-                userId: req.user
+                userId: req.user,
+                total: req.body.total,
+                delivery: req.body.delivery
             });
             return order.save();
+        }).then(result => {
+            return req.user.clearCart();
         })
-        .then(() => {
+        .then(result => {
             res.redirect('/');
         })
         .catch(err => console.log(err));

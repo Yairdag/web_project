@@ -7,12 +7,19 @@
             <h1>No Orders Found</h1>
             <% } else { %>
                 <% orders.forEach(order=> { %>
-                        <h1>Order ID: <%= order._id %></h1>
-                            <% order.products.forEach(p=> { %>
-                                <p>
-                                    <%= p.product.name %> (<%= p.quantity %>)
-                                </p>
-                                <% }); %>
-                    <% }); %>
-                        <% } %>
+                    <h1>Order ID: <%= order._id %>
+                    </h1>
+                    <% order.products.forEach(p=> { %>
+                        <p>
+                            <%= p.product.name %> (<%= p.quantity %>)
+                        </p>
+                        <% }); %>
+                            <p>
+                                Delivery: <%= order.delivery %>
+                            </p>
+                            <p>
+                                Total: <%= order.total %>
+                            </p>
+                            <% }); %>
+                                <% } %>
     </main>

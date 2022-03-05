@@ -22,14 +22,13 @@ const userSchema = new Schema({
   }
 });
 
+
+
 userSchema.methods.removeFromCart = function(prodId) {
   const updatedCartItems = this.cart.items.filter(product => {
     return product.productId.toString() != prodId.toString();
   });
-  const updatedCart = {
-    items: updatedCartItems
-  };
-  this.cart = updatedCart;
+  this.cart.items = updatedCartItems;
   return this.save();
 }
 
@@ -48,13 +47,14 @@ userSchema.methods.addToCart = function (product) {
       quantity: newQuantity
     });
   }
-  const updatedCart = {
-    items: updatedCartItems
-  };
-  this.cart = updatedCart;
+  this.cart.items = updatedCartItems;
   return this.save();
 };
 
+userSchema.methods.clearCart = function() {
+  this.cart.items = [];
+  return this.save();
+};
 
 userSchema.plugin(findOrCreate);
 

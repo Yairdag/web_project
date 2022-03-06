@@ -49,7 +49,7 @@ userSchema.methods.addToCart = function (product, quantity = 1) {
     return this.save();
 };
 
-userSchema.methods.clearCart = function () {
+userSchema.methods.clearCart = function() {
     this.cart.items = [];
     return this.save();
 };

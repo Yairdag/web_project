@@ -1,34 +1,49 @@
 <% layout('./layouts/boilerplate') %>
 
 
-    <link rel="stylesheet" href="/css/orders.css">
-    <main>
-        <% if (orders.length <=0) { %>
-            <div>
-                <h1>No Orders Found</h1>
-                <% } else { %>
-                    <% orders.forEach(order=> { %>
-                        <h1>Order ID: <%= order._id %>
-                        </h1>
-                        <h3>customer's name: <%= order.userId.firstName %> <%= order.userId.lastName %></h3>
-                        <h3>customer's email: <%= order.userId.email %></h3>
-                        <h4>Products:</h3>
+<main class="main container">
+    <section>
+        <div class="section-title">
+            <h2>All Orders<span>.</span></h2>
+        </div>
 
-                        <% order.products.forEach(p=> { %>
-                            <p>
-                                <%= p.product.name %> (<%= p.quantity %>)
-                            </p>
-                            <% }); %>
-                                <form action="/edit-order/<%= order._id %>" method="GET">
-                                    <input type="hidden" value="<%= order._id %>" name="orderId">
-                                    <button class="btn" type="submit">Edit</button>
-                                </form>
-                                <form action="/delete-order" method="POST">
-                                    <input type="hidden" value="<%= order._id %>" name="orderId">
-                                    <button class="btn" type="submit">Delete</button>
-                                </form>
-                                <% }); %>
-                                    <% } %>
 
-            </div>
-    </main>
+        <% if (orders.length > 0) { %>
+            <div class="accordion" id="accordion-orders">
+                <% for (const order of orders) { %>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="heading">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#contact" aria-expanded="false" aria-controls="contact">
+                                    Order ID: <%= order._id %>
+                                    <form action="/delete-order" method="POST">
+                                        <input type="hidden" value="<%= order._id %>" name="orderId">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form> 
+
+                                    <form action="/edit-order/<%= order._id %>" method="GET">
+                                        <input type="hidden" value="<%= order._id %>" name="orderId">
+                                        <button class="btn" type="submit">Edit</button>
+                                    </form>
+                                </button>
+                          </h2>
+
+                          <div id="contact" class="accordion-collapse collapse" aria-labelledby="heading" data-bs-parent="#accordion-orders">
+                            <div class="accordion-body">
+                                customer's name: <%= order.userId.firstName %> <%= order.userId.lastName %>
+                                customer's email: <%= order.userId.email %><p></p>
+                                <h5>Products:</h5>
+                                    <% order.products.forEach(p=> { %>
+                                            <%= p.product.name %> , <%= p.quantity %><p></p>
+                                    <% }); %>
+                                    total price  =  <%= order.total %> $
+                            </div>
+                          </div>
+                        </div>
+                <% } %>
+                </div>
+        <% } else { %>
+            <h3>No Orders has been found!</h3>
+        <% } %>
+    </section>
+</main>
+

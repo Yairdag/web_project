@@ -44,7 +44,6 @@ router.post("/cart", (req, res) => {
         });
 });
 
-
 router.post("/checkout", (req, res) => {
     User.findById(req.user.id)
         .populate('cart.items.productId')

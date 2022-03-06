@@ -9,6 +9,8 @@
             <h2>Login<span>.</span></h2>
         </div>
 
+        <% if (typeof(user) == "undefined") { %>
+
         <p>
             Log Into your TechStore account.
         </p>
@@ -41,6 +43,14 @@
                 </div>
             </div>
         </div>
+
+        <% } else { %>
+
+        <p>
+            It seems like you are already logged in to TechStore via: <b><%=user.email %></b>.
+        </p>
+        
+        <% } %>
     </section>
 </main>
 

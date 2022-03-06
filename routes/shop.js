@@ -7,7 +7,6 @@ const router = require('express').Router();
 
 /* -------------- POST ROUTES ---------------- */
 
-
 router.post("/delete-cart-item", (req, res) => {
     const prodId = req.body.productId;
     console.log(prodId);
@@ -35,12 +34,14 @@ router.post('/add-product', (req, res) => {
 
 router.post("/cart", (req, res) => {
     const prodId = req.body.productId;
+    const quantity = parseInt(req.body.amount);
+
     Product.findById(prodId)
         .then(product => {
-            return req.user.addToCart(product);
+            return req.user.addToCart(product, quantity);
         })
         .then(result => {
-            res.redirect('/cart');
+            res.redirect('/products');
         });
 });
 
@@ -146,7 +147,7 @@ router.get('/shopping-cart', (req, res) => {
 
 
 router.get("/add-product", function (req, res) {
-    res.render("admin/add-product");
+    res.render("admin/add-product", { user: req.user });
 });
 
 router.get('/edit-product/:productId', function (req, res) {

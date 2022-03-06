@@ -66,7 +66,13 @@ app.get('/', (req, res) => {
 app.use(authRoutes);
 app.use(shopRoutes);
 
+
 // error route - 404 page not found
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.render('404', { user: req.user });
+})
+// fallback route - any route error
 app.get('*', (req, res) => {
     res.render('404', { user: req.user });
 });

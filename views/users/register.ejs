@@ -8,6 +8,8 @@
             <h2>Register<span>.</span></h2>
         </div>
 
+        <% if (typeof(user) == "undefined") { %>
+
         <p>
             Create a new user account.
         </p>
@@ -51,6 +53,15 @@
             </div>
         </div>
 
+        <% } else { %>
+
+        <p>
+            You are already registered to TechStore, you are currently logged in via: <b><%=user.email %></b>.
+            <br>
+            If you want to create a new user account, try <a href="/logout" target="_self" class="btn btn-link">logging out</a> first.
+        </p>
+        
+        <% } %>
     </section>
 </main>
 

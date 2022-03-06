@@ -15,7 +15,8 @@
                     <div class="remove">
                         <button type="submit">Remove Item</button>
                     </div>
-                    <input type="hidden" name="orderIdRemove" value="<%=order.products[i].product._id%>">
+                    <input type="hidden" name="orderId" value="<%=order._id%>">
+                    <input type="hidden" name="prodToRemove" value="<%=order.products[i].product._id%>">
                 </form>
             </div>
 

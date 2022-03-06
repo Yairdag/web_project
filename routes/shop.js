@@ -46,7 +46,7 @@ router.post("/cart", (req, res) => {
 });
 
 
-router.post("/order", (req, res) => {
+router.post("/checkout", (req, res) => {
     User.findById(req.user.id)
         .populate('cart.items.productId')
         .then(user => {
@@ -106,7 +106,21 @@ router.post('/update-order', function (req, res) {
     console.log(orderId);
     console.log(quantities);
     console.log(delivery);
-    return res.redirect('/');
+    return res.redirect('/all-orders');
+});
+
+router.post('/delete-order', function (req, res) {
+    const orderId = req.body.orderId;
+    Order.findByIdAndRemove(orderId)
+        .then(() => {
+            res.redirect('/admin/all-orders');
+        })
+        .catch(err => console.log(err));
+});
+
+router.post('/delete-order-item', function (req, res) {
+    req.body.orderId;
+    req.body.prodToRemove;
 });
 
 /* -------------- GET ROUTES ---------------- */

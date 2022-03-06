@@ -1,18 +1,43 @@
-<main>
-    <form class="product-form" action="/edit-product" method="POST">
-        <div class="form-control">
-            <label for="title">Product Name</label>
-            <input type="text" name="name" id="title" value="<%= product.name %>">
+<% layout('./layouts/boilerplate') %>
+
+
+<% if (typeof(user) != "undefined") { %>
+
+<main class="main container">
+    <section>
+        <div class="section-title">
+            <h2>Edit Product<span>.</span></h2>
         </div>
-        <div class="form-control">
-            <label for="imageUrl">Image URL</label>
-            <input type="text" name="imageUrl" id="imageUrl" value="<%= product.url %>">
-        </div>
-        <div class="form-control">
-            <label for="price">Price</label>
-            <input type="number" name="price" id="price" step="0.01" value="<%= product.price %>">
-        </div>
+
+        <p>
+            You are currently editing product <b><%= product._id %></b>.
+        </p>
+
+        <br>
+        <br>
+
+        <form class="form" action="/edit-product" method="POST">
+            <div class="form-field">
+                <label for="title">Product Name</label>
+                <input class="form-input" type="text" name="name" id="title" value="<%= product.name %>">
+            </div>
+            <div class="form-field">
+                <label for="imageUrl">Image URL</label>
+                <input class="form-input" type="text" name="imageUrl" id="imageUrl" value="<%= product.url %>">
+            </div>
+            <div class="form-field">
+                <label for="price">Price</label>
+                <input class="form-input" type="number" name="price" id="price" step="0.01" value="<%= product.price %>">
+            </div>
+
             <input type="hidden" value="<%= product._id %>" name="productId">
-        <button class="btn" type="submit">Update Product</button>
-    </form>
+            <button class="btn btn-block btn-primary" type="submit">Update Product</button>
+        </form>
+    </section>
 </main>
+
+<% } else { %>
+    <% throw 'restricted access'; %>
+<% } %>
+
+<% layout('./layouts/boilerplate') %>

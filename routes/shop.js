@@ -9,6 +9,7 @@ const router = require('express').Router();
 
 router.post("/delete-cart-item", (req, res) => {
     const prodId = req.body.productId;
+    console.log(prodId);
     req.user.removeFromCart(prodId).then(user => {
         res.redirect("/shopping-cart");
     });
@@ -54,7 +55,7 @@ router.post("/checkout", (req, res) => {
             const order = new Order({
                 products: products,
                 userId: req.user,
-                total: req.body.finalPrice,
+                total: req.body.total,
                 delivery: req.body.delivery
             });
             return order.save();
@@ -82,6 +83,7 @@ router.post('/edit-product', function (req, res) {
             return product.save();
         })
         .then(result => {
+            console.log(result);
             res.redirect('/products');
         })
         .catch(err => console.log(err));
@@ -97,28 +99,14 @@ router.post('/delete-product', function (req, res) {
 });
 
 router.post('/update-order', function (req, res) {
+    const orderId = req.body.prodId;
+    const quantities = orderId.map((_, i) => req.body[`quantity${i}`] );
     const delivery = req.body.delivery;
-    const orderId = req.body.orderId;
-    // const prods = Array.isArray(req.body.prodId) ? [...req.body.prodId] : [req.body.prodId];
-    const quantities = Array.isArray(req.body.quantity) ? [...req.body.quantity] : [req.body.quantity];
+    console.log(orderId);
+    console.log(quantities);
+    console.log(delivery);
 
-    
-    Order.findOne({ _id: orderId }).then(doc => {
-        for (i = 0; i < quantities.length; i++) {
-            console.log(doc);
-            console.log(doc.products[i]);
-            doc.products[i].quantity = quantities[i];
-        }
-        let totalPrice = 0;
-        for (p of doc.products) {
-            totalPrice += p.quantity * p.product.price;
-        }
-        doc.total = totalPrice;
-        doc.delivery = delivery;
-        return doc.save();
-    });
     return res.redirect('/all-orders');
-
 });
 
 router.post('/delete-order', function (req, res) {
@@ -131,11 +119,8 @@ router.post('/delete-order', function (req, res) {
 });
 
 router.post('/delete-order-item', function (req, res) {
-    console.log("FF");
-    console.log("FF");
     req.body.orderId;
     req.body.prodToRemove;
-
 });
 
 /* -------------- GET ROUTES ---------------- */
@@ -203,7 +188,7 @@ router.get('/edit-order/:orderId', function (req, res) {
                 return res.redirect('/');
             }
             res.render('admin/edit-order', {
-                order: order,
+                order: order, user: req.user
             });
         })
         .catch(err => console.log(err));
@@ -223,6 +208,7 @@ router.get("/all-orders", (req, res) => {
     Order.find()
         .populate('userId')
         .then(orders => {
+            console.log(orders);
             res.render('admin/all-orders', {
                 orders: orders, user: req.user
             });

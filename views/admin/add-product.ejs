@@ -4,13 +4,13 @@
 <link href="styles/add-product.css" rel="stylesheet" type="text/css" />
 
 
+<% if (typeof(user) != "undefined") { %>
+
 <main class="main container">
     <section>
         <div class="section-title">
             <h2>Add Product<span>.</span></h2>
         </div>
-
-        <% if (typeof(user) != "undefined") { %>
 
         <p>
             Add a new product to the store.
@@ -38,11 +38,11 @@
             </div>
             <button class="btn btn-block btn-primary" type="submit">Add Product <i class="fa fa-upload" aria-hidden="true"></i></button>
         </form>
-
-        <% } else { %>
-            <% throw 'restricted access'; %>
-        <% } %>
     </section>
 </main>
+
+<% } else { %>
+    <% throw 'restricted access'; %>
+<% } %>
 
 <% layout('./layouts/boilerplate') %>

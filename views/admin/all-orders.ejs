@@ -19,6 +19,11 @@
                                         <input type="hidden" value="<%= order._id %>" name="orderId">
                                         <button class="btn" type="submit">Delete</button>
                                     </form> 
+
+                                    <form action="/edit-order/<%= order._id %>" method="GET">
+                                        <input type="hidden" value="<%= order._id %>" name="orderId">
+                                        <button class="btn" type="submit">Edit</button>
+                                    </form>
                                 </button>
                           </h2>
 

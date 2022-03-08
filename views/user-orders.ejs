@@ -6,7 +6,17 @@
 
 <main>
     <% if (orders.length <=0) { %>
-        <h1>No Orders Found</h1>
+        <main class="main container">
+            <section>
+                <div class="section-title">
+                    <h2>No Orders Found<span>.</span></h2>
+                </div>
+
+                <p>
+                    browse our products and start<b><a href="/products" target="_self"> Shopping</a></b>.
+                </p>
+            </section>
+        </main>
         <% } else { %>
             <% orders.forEach(order=> { %>
                 <h1>Order ID: <%= order._id %>

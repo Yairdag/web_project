@@ -8,6 +8,7 @@ const userSchema = new Schema({
     firstName: String,
     lastName: String,
     password: String,
+    role: String,
     cart: {
         items: [
             {

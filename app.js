@@ -6,13 +6,13 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const MongoStore = require('connect-mongo');
+
 const authRoutes = require('./routes/auth');
 const shopRoutes = require('./routes/shop');
+const adminRoutes = require('./routes/admin');
 
 const { profile } = require('console');
-
 const app = express();
-
 app.use(express.static('public'));
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
@@ -65,14 +65,8 @@ app.get('/', (req, res) => {
 
 app.use(authRoutes);
 app.use(shopRoutes);
+app.use(adminRoutes);
 
-
-// error route - 404 page not found
-app.use((err, req, res, next) => {
-    console.error(err.stack)
-    res.render('404', { user: req.user });
-})
-// fallback route - any route error
 app.get('*', (req, res) => {
     res.render('404', { user: req.user });
 });

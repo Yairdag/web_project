@@ -12,6 +12,12 @@
           <li class="nav-item"><a href="/#about" target="_self">about</a></li>
           <li class="nav-item"><a href="/#contact" target="_self">contact</a></li>
           <li class="nav-item"><a href="/products" target="_self">products</a></li>
+          <% if(user.role == "admin") { %>
+            <li class="nav-item"><a href="/add-product" target="_self">Add Product</a></li>
+            <li class="nav-item"><a href="/all-orders" target="_self">All Orders</a></li>
+                <% } %>
+
+
       </ul>
 
       <ul class="nav-menu">
@@ -24,6 +30,7 @@
               <a href="/login" target="_self" class="btn btn-primary">log in</a>
           </li>
       <% } else { %>
+        <li class="nav-item"><a href="/my-orders" target="_self">My Orders</a></li>
           <li class="nav-item">
               <% if (user.cart.items.length > 0) { %>
                   <a href="/shopping-cart" target="_self" class="cart-icon-wrapper" data-quantity="<%=user.cart.items.length %>">

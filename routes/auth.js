@@ -12,6 +12,7 @@ router.post('/register', function (req, res) {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         password: req.body.password,
+        role: "user"
     });
     newUser.save(function (err) {
         if (err) {
@@ -37,7 +38,7 @@ router.get(
     '/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     function (req, res) {
-        res.redirect('/code');
+        res.redirect('/products');
     }
 );
 
@@ -51,7 +52,8 @@ router.get('/register', (req, res) => {
 
 router.get('/logout', (req, res, next) => {
     req.logout();
-    res.redirect('/login', { user: req.user });
+    console.log(req.user);
+    return res.redirect('/login');
 });
 
 module.exports = router;

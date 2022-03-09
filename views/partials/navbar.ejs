@@ -12,12 +12,10 @@
           <li class="nav-item"><a href="/#about" target="_self">about</a></li>
           <li class="nav-item"><a href="/#contact" target="_self">contact</a></li>
           <li class="nav-item"><a href="/products" target="_self">products</a></li>
-          <% if(user.role == "admin") { %>
+          <% if((typeof(user) != "undefined") && user.role == "admin") { %>
             <li class="nav-item"><a href="/add-product" target="_self">Add Product</a></li>
             <li class="nav-item"><a href="/all-orders" target="_self">All Orders</a></li>
                 <% } %>
-
-
       </ul>
 
       <ul class="nav-menu">

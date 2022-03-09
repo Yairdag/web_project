@@ -101,7 +101,9 @@ router.get("/my-orders", (req, res) => {
         return res.redirect('/login');
     }
     Order.find({ userId: req.user.id })
+    .populate('userId')
         .then(orders => {
+            console.log(orders);
             res.render('user-orders', {
                 orders: orders, user: req.user
             });

@@ -32,7 +32,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
  * -------------- GET ROUTES ----------------
  */
 
-router.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get(
     '/auth/google/callback',

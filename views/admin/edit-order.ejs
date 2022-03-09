@@ -43,9 +43,8 @@
                             </td>
                             <td>
                                 <input type="hidden" hidden value="<%= order.products[i].product._id %>" name="prodId">
-                                <input type="hidden" hidden name="orderId" value="<%=order._id%>">
                                 <input type="hidden" hidden name="prodToRemove" value="<%=order.products[i].product._id%>">
-                                <button type="submit" class="btn btn-outline" formaction="/delete-order-item" title="Remove item from order">Remove</button>
+                                <button type="submit" class="btn btn-outline" formaction="/delete-order-item/<%=order.products[i].product._id%>" title="Remove item from order">Remove</button>
                             </td>
                         </tr>
                         <% }  // for-loop %>
@@ -61,7 +60,7 @@
                     <option value="collect" data-price="0">Collect (free)</option>
                 </select>
             </fieldset>
-            
+            <input type="hidden" hidden name="orderId" value="<%=order._id%>">
             <button class="btn btn-primary btn-block" type="submit">Update Order</button>
         </form>
     </section>

@@ -44,7 +44,6 @@ router.post('/edit-product', function (req, res) {
             return product.save();
         })
         .then(result => {
-            console.log(result);
             res.redirect('/products');
         })
         .catch(err => console.log(err));
@@ -55,13 +54,28 @@ router.post('/update-order', function (req, res) {
         return res.redirect('/');
     }
 
-    const orderId = req.body.prodId;
-    const quantities = orderId.map((_, i) => req.body[`quantity${i}`]);
+    const deliveryPrices = {
+        standard: 2.49,
+        fast: 6.99,
+        collect: 0
+    }
+    const orderId = req.body.orderId;
+    const prodId = req.body.prodId;
+    const quantities = prodId.map((_, i) => req.body[`quantity${i}`]);
     const delivery = req.body.delivery;
-    console.log(orderId);
-    console.log(quantities);
-    console.log(delivery);
 
+    Order.findOne({ _id: orderId }).then(order => {
+        for (item of order.products) {
+            item.quantity = quantities.pop();
+        }
+        let totalPrice = 0;
+        for (item of order.products) {
+            totalPrice += item.quantity * item.product.price;
+        }
+        order.total = totalPrice + deliveryPrices[delivery];
+        order.delivery = delivery;
+        return order.save();
+    });
     return res.redirect('/all-orders');
 });
 
@@ -89,15 +103,23 @@ router.post('/delete-product', function (req, res) {
         .catch(err => console.log(err));
 });
 
-router.post('/delete-order-item', function (req, res) {
+router.post('/delete-order-item/:prodId', function (req, res) {
     if (!req.isAuthenticated() || req.user.role !== "admin") {
         return res.redirect('/');
     }
-    req.body.orderId;
-    req.body.prodToRemove;
+    const orderId = req.body.orderId;
+    const prodId = req.params.prodId;
+
+    Order.findOne({ _id: orderId }).then(order => {
+        const newProducts = order.products.filter(item => {
+            return item.product._id != prodId;
+        });
+        order.products = newProducts;
+        return order.save();
+    }).then(result => {
+        return res.redirect('/edit-order/' + orderId);
+    });
 });
-
-
 
 /**
  * -------------- GET ROUTES ----------------
@@ -131,7 +153,7 @@ router.get('/edit-product/:productId', function (req, res) {
 
 router.get('/edit-order/:orderId', function (req, res) {
     if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.redirect('/home');
+        return res.redirect('/');
     }
     const orderId = req.params.orderId;
     Order.findById(orderId)
@@ -149,12 +171,11 @@ router.get('/edit-order/:orderId', function (req, res) {
 
 router.get("/all-orders", (req, res) => {
     if (!req.isAuthenticated() || req.user.role !== "admin") {
-        return res.redirect('/home');
+        return res.redirect('/');
     }
     Order.find()
         .populate('userId')
         .then(orders => {
-            console.log(orders);
             res.render('admin/all-orders', {
                 orders: orders, user: req.user
             });

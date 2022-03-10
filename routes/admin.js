@@ -2,7 +2,6 @@ const Product = require("../models/product");
 const Order = require("../models/order");
 const router = require('express').Router();
 
-
 /**
  * -------------- POST ROUTES ----------------
  */
@@ -35,12 +34,14 @@ router.post('/edit-product', function (req, res) {
     const updatedTitle = req.body.name;
     const updatedPrice = req.body.price;
     const updatedImageUrl = req.body.imageUrl;
+    const updatedDescription = req.body.description;
 
     Product.findById(prodId)
         .then(product => {
             product.name = updatedTitle;
             product.price = updatedPrice;
             product.imageUrl = updatedImageUrl;
+            product.description = updatedDescription;
             return product.save();
         })
         .then(result => {
@@ -137,13 +138,11 @@ router.get('/edit-product/:productId', function (req, res) {
         return res.redirect('/');
     }
     const prodId = req.params.productId;
+    console.log(prodId);
     Product.findById(prodId)
-        .then(product => {
-            if (!product) {
-                return res.redirect('/');
-            }
+        .then(prod => {
             res.render('admin/edit-product', {
-                product: product,
+                product: prod, user: req.user
             });
         })
         .catch(err => console.log(err));
@@ -176,8 +175,9 @@ router.get("/all-orders", (req, res) => {
     Order.find()
         .populate('userId')
         .then(orders => {
+            filteredOrders = orders.filter(order => order.userId != null);
             res.render('admin/all-orders', {
-                orders: orders, user: req.user
+                orders: filteredOrders, user: req.user
             });
         })
         .catch(err => console.log(err));

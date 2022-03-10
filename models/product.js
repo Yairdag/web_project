@@ -10,7 +10,7 @@ const ProductSchema = new Schema(
         url: String,
     },
     {
-        strict: true,
+        strict: false,
     }
 );
 

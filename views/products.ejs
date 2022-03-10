@@ -61,6 +61,19 @@
                                 <button class="btn btn-primary" type="submit">Add to Cart</button>
                             </form>
                         <% } %>
+                        <% if ((typeof(user) != "undefined") && (user.role == "admin")){ %>
+                            <span class="orders-list-item-btns">
+                                <form action="/edit-product/<%= product._id %>" method="GET" title="Edit Product">
+                                    <input type="hidden" value="<%= product._id %>" name="productId">
+                                    <button class="btn btn-note" type="submit"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                                </form>
+                                <form action="/delete-product" method="POST" title="Delete Product">
+                                    <input type="hidden" value="<%= product._id %>" name="productId">
+                                    <button class="btn btn-warning" type="submit"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                </form>
+                            </span>
+                        <% } %>
+
                     </div>
                 <% } %>
             </div>

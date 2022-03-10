@@ -22,6 +22,10 @@
                 <input class="form-input" type="text" name="name" id="title" value="<%= product.name %>">
             </div>
             <div class="form-field">
+                <label for="description">Product Description</label>
+                <textarea class="form-input" name="description" type="text" id="description" rows="5"><%= product.description %></textarea>
+            </div>
+            <div class="form-field">
                 <label for="imageUrl">Image URL</label>
                 <input class="form-input" type="text" name="imageUrl" id="imageUrl" value="<%= product.url %>">
             </div>
@@ -36,8 +40,7 @@
     </section>
 </main>
 
-<% } else { %>
-    <% throw 'restricted access'; %>
 <% } %>
+
 
 <% layout('./layouts/boilerplate') %>

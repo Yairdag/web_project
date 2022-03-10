@@ -1,6 +1,16 @@
 /* --------------------------------------------------------------------------------------------- */
 /* --- Products Page --------------------------------------------------------------------------- */
 
+
+.ed-buttons{
+    text-align: center;
+    padding: 5%;
+}
+
+.ed-form{
+    display: inline;
+}
+
 .product-grid {
     display: flex;
     flex-direction: row;

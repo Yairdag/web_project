@@ -61,7 +61,7 @@ router.post('/update-order', function (req, res) {
         collect: 0
     }
     const orderId = req.body.orderId;
-    const prodId = req.body.prodId;
+    const prodId = Array.isArray(req.body.prodId) ? [...req.body.prodId] : [req.body.prodId];
     const quantities = prodId.map((_, i) => req.body[`quantity${i}`]);
     const delivery = req.body.delivery;
 
